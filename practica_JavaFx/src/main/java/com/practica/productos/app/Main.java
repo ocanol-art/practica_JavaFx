@@ -1,5 +1,7 @@
 package com.practica.productos.app;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -9,18 +11,26 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     @Override
-    public void start(Stage stage) {
+public void start(Stage stage) {
 
-        Label label = new Label("Hola JavaFX");
+    TextField campo = new TextField();
 
-        VBox layout = new VBox(label);
+    Button boton = new Button("Mostrar");
 
-        Scene scene = new Scene(layout, 300, 200);
+    Label label = new Label();
 
-        stage.setScene(scene);
-        stage.setTitle("CRUD Productos");
-        stage.show();
-    }
+    boton.setOnAction(e -> {
+        label.setText(campo.getText());
+    });
+
+    VBox layout = new VBox(10, campo, boton, label);
+
+    Scene scene = new Scene(layout, 300, 200);
+
+    stage.setScene(scene);
+    stage.setTitle("CRUD Productos");
+    stage.show();
+}
 
     public static void main(String[] args) {
         launch();
