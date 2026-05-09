@@ -17,4 +17,11 @@ public class ProductoService {
 
         return new ArrayList<>(productos);
     }
+
+    public void eliminar(String nombre) {
+
+        productos.removeIf(
+            p -> p.getNombre().equalsIgnoreCase(nombre)
+        );
+    }
 }

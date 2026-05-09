@@ -1,59 +1,92 @@
 package com.practica.productos.app;
 
-
-import javafx.scene.control.TextArea;
-import com.practica.productos.servicio.ProductoService;
 import com.practica.productos.modelo.Producto;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import com.practica.productos.servicio.ProductoService;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-ProductoService servicio = new ProductoService();
-    
+
+    ProductoService servicio = new ProductoService();
+
     @Override
-public void start(Stage stage) {
+    public void start(Stage stage) {
 
-    TextField campo = new TextField();
+        TextField campo = new TextField();
 
-    Button boton = new Button("Mostrar");
+        TextArea area = new TextArea();
+        area.setEditable(false);
 
-    TextArea area = new TextArea();
+        Button boton = new Button("Agregar");
+        Button eliminar = new Button("Eliminar");
+        Button buscar = new Button("Buscar");
 
-area.setEditable(false);
+        // AGREGAR
+        boton.setOnAction(e -> {
 
-    boton.setOnAction(e -> {
-        
-      try {
+            try {
 
-    servicio.agregar(new Producto(campo.getText()));
+                servicio.agregar(new Producto(campo.getText()));
 
-    String texto = "";
+                String texto = "";
 
-    for (Producto p : servicio.listar()) {
+                for (Producto p : servicio.listar()) {
 
-        texto += p.getNombre() + "\n";
+                    texto += p.getNombre() + "\n";
+                }
+
+                area.setText(texto);
+
+            } catch (Exception ex) {
+
+                area.setText(ex.getMessage());
+            }
+        });
+
+        // ELIMINAR
+        eliminar.setOnAction(e -> {
+
+            servicio.eliminar(campo.getText());
+
+            String texto = "";
+
+            for (Producto p : servicio.listar()) {
+
+                texto += p.getNombre() + "\n";
+            }
+
+            area.setText(texto);
+        });
+
+        // BUSCAR
+        buscar.setOnAction(e -> {
+
+            Producto p = servicio.buscar(campo.getText());
+
+            if (p != null) {
+
+                area.setText("Encontrado: " + p.getNombre());
+
+            } else {
+
+                area.setText("Producto no encontrado");
+            }
+        });
+
+        VBox layout = new VBox(10, campo, boton, eliminar, buscar, area);
+
+        Scene scene = new Scene(layout, 400, 300);
+
+        stage.setScene(scene);
+        stage.setTitle("CRUD Productos");
+        stage.show();
     }
-
-    area.setText(texto);
-
-} catch (Exception ex) {
-
-    area.setText(ex.getMessage());
-}
-    });
-
-VBox layout = new VBox(10, campo, boton, area);
-    Scene scene = new Scene(layout, 300, 200);
-
-    stage.setScene(scene);
-    stage.setTitle("CRUD Productos");
-    stage.show();
-}
 
     public static void main(String[] args) {
         launch();
