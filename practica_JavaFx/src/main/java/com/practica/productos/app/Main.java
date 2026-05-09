@@ -1,5 +1,6 @@
 package com.practica.productos.app;
 
+import com.practica.productos.servicio.ProductoService;
 import com.practica.productos.modelo.Producto;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -10,7 +11,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
+ProductoService servicio = new ProductoService();
+    
     @Override
 public void start(Stage stage) {
 
@@ -24,9 +26,16 @@ public void start(Stage stage) {
         
       try {
 
-    Producto p = new Producto(campo.getText());
+    servicio.agregar(new Producto(campo.getText()));
 
-    label.setText(p.getNombre());
+    String texto = "";
+
+    for (Producto p : servicio.listar()) {
+
+        texto += p.getNombre() + "\n";
+    }
+
+    label.setText(texto);
 
 } catch (Exception ex) {
 
