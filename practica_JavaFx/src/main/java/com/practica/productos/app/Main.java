@@ -1,5 +1,6 @@
 package com.practica.productos.app;
 
+import com.practica.productos.modelo.Producto;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.application.Application;
@@ -20,7 +21,17 @@ public void start(Stage stage) {
     Label label = new Label();
 
     boton.setOnAction(e -> {
-        label.setText(campo.getText());
+        
+      try {
+
+    Producto p = new Producto(campo.getText());
+
+    label.setText(p.getNombre());
+
+} catch (Exception ex) {
+
+    label.setText(ex.getMessage());
+}
     });
 
     VBox layout = new VBox(10, campo, boton, label);
