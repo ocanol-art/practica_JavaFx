@@ -1,5 +1,7 @@
 package com.practica.productos.app;
 
+
+import javafx.scene.control.TextArea;
 import com.practica.productos.servicio.ProductoService;
 import com.practica.productos.modelo.Producto;
 import javafx.scene.control.Button;
@@ -20,7 +22,9 @@ public void start(Stage stage) {
 
     Button boton = new Button("Mostrar");
 
-    Label label = new Label();
+    TextArea area = new TextArea();
+
+area.setEditable(false);
 
     boton.setOnAction(e -> {
         
@@ -35,16 +39,15 @@ public void start(Stage stage) {
         texto += p.getNombre() + "\n";
     }
 
-    label.setText(texto);
+    area.setText(texto);
 
 } catch (Exception ex) {
 
-    label.setText(ex.getMessage());
+    area.setText(ex.getMessage());
 }
     });
 
-    VBox layout = new VBox(10, campo, boton, label);
-
+VBox layout = new VBox(10, campo, boton, area);
     Scene scene = new Scene(layout, 300, 200);
 
     stage.setScene(scene);
