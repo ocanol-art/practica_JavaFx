@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -79,7 +80,11 @@ public class Main extends Application {
             }
         });
 
-        VBox layout = new VBox(10, campo, boton, eliminar, buscar, area);
+        // HBOX PARA BOTONES
+        HBox botones = new HBox(10, boton, eliminar, buscar);
+
+        // VBOX PRINCIPAL
+        VBox layout = new VBox(10, campo, botones, area);
 
         Scene scene = new Scene(layout, 400, 300);
 
